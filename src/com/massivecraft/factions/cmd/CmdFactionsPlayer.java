@@ -3,9 +3,9 @@ package com.massivecraft.factions.cmd;
 import com.massivecraft.factions.cmd.type.TypeMPlayer;
 import com.massivecraft.factions.entity.MConf;
 import com.massivecraft.factions.entity.MPlayer;
-import com.massivecraft.factions.event.EventFactionsRemovePlayerMillis;
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.Progressbar;
+import com.massivecraft.massivecore.event.EventMassiveCoreRemovePlayerMillis;
 import com.massivecraft.massivecore.util.TimeDiffUtil;
 import com.massivecraft.massivecore.util.TimeUnit;
 import com.massivecraft.massivecore.util.Txt;
@@ -82,9 +82,9 @@ public class CmdFactionsPlayer extends FactionsCommand
 		// Display automatic kick / remove info if the system is in use
 		if (MConf.get().removePlayerMillisDefault <= 0) return;
 		
-		EventFactionsRemovePlayerMillis event = new EventFactionsRemovePlayerMillis(false, mplayer);
+		EventMassiveCoreRemovePlayerMillis event = new EventMassiveCoreRemovePlayerMillis(mplayer);
 		event.run();
-		msg("<i>Automatic removal after %s <i>of inactivity:", format(event.getMillis()));
+		msg("<i>Automatic removal after %s <i>of inactivity:", format(event.getToleranceMillis()));
 		for (Entry<String, Long> causeMillis : event.getCauseMillis().entrySet())
 		{
 			String cause = causeMillis.getKey();
